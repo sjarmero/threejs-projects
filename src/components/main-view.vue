@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import * as THREE from 'three';
-import {onMounted, ref} from "vue";
+import {onMounted, ref} from 'vue';
 
 const width = 800;
 const height = 600;
@@ -22,7 +22,7 @@ onMounted(()=> {
   if (canvas.value) {
     const renderer = new THREE.WebGLRenderer({
       canvas: canvas.value,
-    })
+    });
 
     renderer.setSize(width, height);
     renderer.render(scene, camera);
