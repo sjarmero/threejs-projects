@@ -1,5 +1,6 @@
 <script setup lang="ts">
+
 </script>
 <template>
-  <RouterView />
+  <h1>Project Earth</h1>
 </template>

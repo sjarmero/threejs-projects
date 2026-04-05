@@ -2,5 +2,8 @@ import './style.scss';
 
 import { createApp } from 'vue';
 import App from './App.vue';
+import {router} from '@/router/routes.ts';
 
-createApp(App).mount('#app');
+createApp(App)
+  .use(router)
+  .mount('#app');
