@@ -8,10 +8,10 @@ let width = window.innerWidth;
 let height = window.innerHeight;
 
 const canvas = ref<HTMLElement>();
-const state = use3DContext();
+const context = use3DContext();
 
 onMounted(()=> {
-  state.renderer = new WebGLRenderer({
+  context.renderer = new WebGLRenderer({
     canvas: canvas.value,
   });
 
@@ -24,15 +24,15 @@ onMounted(()=> {
 function updateCanvasSize() {
   width = window.innerWidth;
   height = window.innerHeight;
-  state.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  context.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-  if (state.camera instanceof PerspectiveCamera) {
-    state.camera.aspect = width / height;
-    state.camera.updateProjectionMatrix();
+  if (context.camera instanceof PerspectiveCamera) {
+    context.camera.aspect = width / height;
+    context.camera.updateProjectionMatrix();
   }
 
-  state.renderer.setSize(width, height);
-  state.renderer.render(state.scene, state.camera);
+  context.renderer.setSize(width, height);
+  context.renderer.render(context.scene, context.camera);
 }
 
 const isLoading = ref(false);
