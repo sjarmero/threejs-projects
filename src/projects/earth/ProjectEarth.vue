@@ -52,7 +52,7 @@ function addEarth() {
   const earthNormalTexture = tiffLoader.load(earthNormalTexturePath);
 
   const globe = new Mesh(
-    new SphereGeometry(6, 128, 128),
+    new SphereGeometry(6, 128, 512),
     new MeshStandardMaterial({
       map: earthColorTexture,
       normalMap: earthNormalTexture,
