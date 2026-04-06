@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {onMounted, ref} from 'vue';
+import {computed, onMounted, ref} from 'vue';
 import {use3DContext} from '@/components/scene-viewer/use3DContext.ts';
 import {PerspectiveCamera, WebGLRenderer} from 'three';
 import {useLoadingManager} from '@/components/scene-viewer/useLoadingManager.ts';
@@ -35,23 +35,8 @@ function updateCanvasSize() {
   context.renderer.render(context.scene, context.camera);
 }
 
-const isLoading = ref(false);
-const loadingError = ref(false);
-const loadingProgress = ref(0);
-
-const loadingManager = useLoadingManager();
-loadingManager.onStart = ()=> {
-  isLoading.value = true;
-};
-loadingManager.onLoad = ()=> {
-  isLoading.value = false;
-};
-loadingManager.onProgress = (_, loaded, total) => {
-  loadingProgress.value = Math.ceil(loaded / total);
-};
-loadingManager.onError = ()=> {
-  loadingError.value = true;
-};
+const {isLoading, hasLoadingError, loadingProgress} = useLoadingManager();
+const shouldDisplayLoadingScreen = computed(()=> isLoading.value || hasLoadingError.value);
 </script>
 <template>
   <div class="scene-viewer">
@@ -61,12 +46,12 @@ loadingManager.onError = ()=> {
     />
 
     <div
-      v-if="isLoading"
+      v-if="shouldDisplayLoadingScreen"
       class="scene-viewer__loader"
     >
       Loading... ({{ loadingProgress }}%)
 
-      <p v-if="loadingError">
+      <p v-if="hasLoadingError">
         Error while loading!
       </p>
     </div>

@@ -9,7 +9,7 @@ import {
   MeshStandardMaterial,
   PerspectiveCamera,
   Scene,
-  SphereGeometry, TextureLoader
+  SphereGeometry, SRGBColorSpace, TextureLoader
 } from 'three';
 import SceneViewer from '@/components/scene-viewer/scene-viewer.vue';
 import {OrbitControls} from 'three/addons/controls/OrbitControls';
@@ -22,7 +22,7 @@ import {TIFFLoader} from 'three/addons/loaders/TIFFLoader';
 
 // 1 unit: 1000 KM
 
-const loadingManager = useLoadingManager();
+const {loadingManager} = useLoadingManager();
 const textureLoader = new TextureLoader(loadingManager);
 const tiffLoader = new TIFFLoader(loadingManager);
 
@@ -48,6 +48,7 @@ function addEarth() {
   const earth = new Group();
 
   const earthColorTexture = textureLoader.load(earthColorTexturePath);
+  earthColorTexture.colorSpace = SRGBColorSpace;
   const earthNormalTexture = tiffLoader.load(earthNormalTexturePath);
 
   const globe = new Mesh(
