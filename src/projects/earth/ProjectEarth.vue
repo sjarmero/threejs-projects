@@ -9,7 +9,7 @@ import {
   MeshStandardMaterial,
   PerspectiveCamera,
   Scene,
-  SphereGeometry, SRGBColorSpace, TextureLoader
+  SphereGeometry, SRGBColorSpace, TextureLoader, Timer
 } from 'three';
 import SceneViewer from '@/components/scene-viewer/scene-viewer.vue';
 import {OrbitControls} from 'three/addons/controls/OrbitControls';
@@ -29,6 +29,8 @@ const context = use3DContext();
 context.scene = new Scene();
 context.camera = new PerspectiveCamera();
 
+let earth: Group;
+
 setCamera();
 addEarth();
 addLights();
@@ -44,7 +46,9 @@ function setCamera() {
 }
 
 function addEarth() {
-  const earth = new Group();
+  const EARTH_AXIAL_TILT = 23 * (Math.PI / 180); // 23º to rads
+
+  earth = new Group();
 
   const earthColorTexture = textureLoader.load(earthColorTexturePath);
   earthColorTexture.colorSpace = SRGBColorSpace;
@@ -57,16 +61,20 @@ function addEarth() {
       normalMap: earthNormalTexture,
     })
   );
+
+  earth.rotation.set(0, 0, -EARTH_AXIAL_TILT);
+
+  earth.add(new AxesHelper(15));
   earth.add(globe);
 
   context.scene.add(earth);
 }
 
 function addLights() {
-  context.scene.add(new AmbientLight(0xffffff, 0.3));
+  context.scene.add(new AmbientLight(0xffffff, 0.2));
 
-  const directionalLight = new DirectionalLight();
-  directionalLight.position.set(10, 10, 0);
+  const directionalLight = new DirectionalLight(0xffffff, 1.5);
+  directionalLight.position.set(20, 0, 0);
   context.scene.add(directionalLight);
   context.scene.add(new DirectionalLightHelper(directionalLight, 10));
 }
@@ -75,7 +83,16 @@ function addHelpers() {
   context.scene.add(new AxesHelper(3));
 }
 
+const timer = new Timer();
 function tick() {
+  timer.update();
+
+  earth.rotation.set(
+    earth.rotation.x,
+    (timer.getElapsed() * 0.25 * -1) % (2 * Math.PI),
+    earth.rotation.z,
+  );
+
   context.renderer.render(context.scene, context.camera);
 
   requestAnimationFrame(tick);
