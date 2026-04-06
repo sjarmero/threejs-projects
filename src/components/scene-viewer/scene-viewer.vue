@@ -2,6 +2,7 @@
 import {onMounted, ref} from 'vue';
 import {use3DContext} from '@/components/scene-viewer/use3DContext.ts';
 import {PerspectiveCamera, WebGLRenderer} from 'three';
+import {useLoadingManager} from '@/components/scene-viewer/useLoadingManager.ts';
 
 let width = window.innerWidth;
 let height = window.innerHeight;
@@ -33,12 +34,62 @@ function updateCanvasSize() {
   state.renderer.setSize(width, height);
   state.renderer.render(state.scene, state.camera);
 }
+
+const isLoading = ref(false);
+const loadingError = ref(false);
+const loadingProgress = ref(0);
+
+const loadingManager = useLoadingManager();
+loadingManager.onStart = ()=> {
+  isLoading.value = true;
+};
+loadingManager.onLoad = ()=> {
+  isLoading.value = false;
+};
+loadingManager.onProgress = (_, loaded, total) => {
+  loadingProgress.value = Math.ceil(loaded / total);
+};
+loadingManager.onError = ()=> {
+  loadingError.value = true;
+};
 </script>
 <template>
-  <canvas ref="canvas" />
+  <div class="scene-viewer">
+    <canvas
+      ref="canvas"
+      class="scene-viewer__canvas"
+    />
+
+    <div
+      v-if="isLoading"
+      class="scene-viewer__loader"
+    >
+      Loading... ({{ loadingProgress }}%)
+
+      <p v-if="loadingError">
+        Error while loading!
+      </p>
+    </div>
+  </div>
 </template>
 <style lang="scss" scoped>
-canvas {
-  outline: none;
+.scene-viewer {
+  &__canvas {
+    outline: none;
+  }
+
+  &__loader {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #0c0c0c;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #f0f0f0;
+  }
 }
 </style>
