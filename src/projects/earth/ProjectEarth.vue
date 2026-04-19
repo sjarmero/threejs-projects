@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import {use3DContext} from '@/components/scene-viewer/use3DContext.ts';
+import SceneViewer from '@/components/scene-viewer/scene-viewer.vue';
+import { use3DContext } from '@/components/scene-viewer/use3DContext.ts';
+import { useLoadingManager } from '@/components/scene-viewer/useLoadingManager.ts';
 import {
   AmbientLight,
   AxesHelper,
@@ -11,14 +13,11 @@ import {
   Scene,
   SphereGeometry, SRGBColorSpace, TextureLoader, Timer
 } from 'three';
-import SceneViewer from '@/components/scene-viewer/scene-viewer.vue';
-import {OrbitControls} from 'three/addons/controls/OrbitControls';
-import {onMounted} from 'vue';
-import {useLoadingManager} from '@/components/scene-viewer/useLoadingManager.ts';
+import { OrbitControls } from 'three/addons/controls/OrbitControls';
+import { onMounted } from 'vue';
 
 import earthColorTexturePath from '~/assets/earth/8k_earth_daymap.jpg';
 import earthNormalTexturePath from '~/assets/earth/8k_earth_normal_map.png';
-import {TIFFLoader} from 'three/addons/loaders/TIFFLoader';
 
 // 1 unit: 1000 KM
 
