@@ -15,5 +15,10 @@ import { ROUTE_NAMES } from '@/router/route-names.ts';
         Galaxy Generator
       </router-link>
     </li>
+    <li>
+      <router-link :to="{name: ROUTE_NAMES.PROJECT_ROOM}">
+        Room
+      </router-link>
+    </li>
   </ul>
 </template>

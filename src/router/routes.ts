@@ -3,6 +3,7 @@ import ProjectEarth from '@/projects/earth/ProjectEarth.vue';
 import ProjectGalaxyGenerator from '@/projects/galaxy-generator/ProjectGalaxyGenerator.vue';
 import { ROUTE_NAMES } from '@/router/route-names.ts';
 import { createRouter, createWebHashHistory } from 'vue-router';
+import ProjectRoom from '../projects/room/ProjectRoom.vue';
 
 const routes = [
   {
@@ -19,6 +20,11 @@ const routes = [
     name: ROUTE_NAMES.PROJECT_GALAXY_GENERATOR,
     path: '/galaxy-generator',
     component: ProjectGalaxyGenerator,
+  },
+  {
+    name: ROUTE_NAMES.PROJECT_ROOM,
+    path: '/room',
+    component: ProjectRoom,
   },
 ];
 
