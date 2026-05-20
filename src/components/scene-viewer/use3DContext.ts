@@ -1,6 +1,6 @@
-import {SB_3D_CONTEXT} from '@/symbols.ts';
-import {inject, provide} from 'vue';
-import type {Camera, Scene, WebGLRenderer} from 'three';
+import { SB_3D_CONTEXT } from '@/symbols.ts';
+import type { Camera, Scene, WebGLRenderer } from 'three';
+import { inject, provide } from 'vue';
 
 type State3DContext = {
   renderer: WebGLRenderer,

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import {computed, onMounted, ref} from 'vue';
-import {use3DContext} from '@/components/scene-viewer/use3DContext.ts';
-import {PerspectiveCamera, WebGLRenderer} from 'three';
-import {useLoadingManager} from '@/components/scene-viewer/useLoadingManager.ts';
+import { use3DContext } from '@/components/scene-viewer/use3DContext.ts';
+import { useLoadingManager } from '@/components/scene-viewer/useLoadingManager.ts';
+import { PerspectiveCamera, WebGLRenderer } from 'three';
+import { computed, onMounted, ref } from 'vue';
 
 let width = window.innerWidth;
 let height = window.innerHeight;
@@ -13,6 +13,7 @@ const context = use3DContext();
 onMounted(()=> {
   context.renderer = new WebGLRenderer({
     canvas: canvas.value,
+    antialias: true
   });
 
   updateCanvasSize();

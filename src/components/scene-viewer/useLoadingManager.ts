@@ -1,6 +1,6 @@
-import {LoadingManager} from 'three';
-import {inject, provide, type Ref, ref} from 'vue';
-import {SB_LOADING_MANAGER} from '@/symbols.ts';
+import { SB_LOADING_MANAGER } from '@/symbols.ts';
+import { LoadingManager } from 'three';
+import { inject, provide, type Ref, ref } from 'vue';
 
 type LoadingManagerState = {
   isLoading: Ref<boolean>,
